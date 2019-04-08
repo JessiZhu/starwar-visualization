@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>豆瓣电影数据可视化</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{{url_for('static',filename='img/logo.png')}}">
+    <script src="{{ url_for('static' , filename='js/jquery.min.js') }}"></script>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="{{url_for('static',filename='js/echarts.min.js')}}"></script>
+    {% block style %}
+    {% endblock %}
+    <style>
+        #header{
+            background-image: url("{{ url_for('static' , filename='img/header.png')}}");
+            background-size: cover;
+            -webkit-background-size: cover;
+            position:relative;
+            padding:60px 80px;
+            box-shadow: 0px 3px 3px rgba(20, 20, 20, 0.3) inset;
+        }
+
+        #header #nav{
+            position: absolute;
+            right : 80px ;
+            top : 60px ;
+        }
+
+        #header #nav a{
+            border :1px solid white;
+            border-radius: 4px;
+            padding: 8px 20px;
+            text-align: center;
+            color : white;
+            background-color: transparent;
+            text-decoration : none;
+            display:inline-block;
+            margin-right: 15px;
+            cursor:pointer ;
+            font-size: 15px;
+            transition: color , background-color .3s;
+            -o-transition: color , background-color .3s;
+            -moz-transition: color , background-color .3s;
+            -webkit-transition: color , background-color .3s;
+        }
+
+        #header #nav a.active{
+            background-color: white;
+            color: blue;
+             box-shadow: 1px 5px 10px rgba(20,20,20,.6);
+        }
+
+        #header a p :hover{
+            color: #24597F;
+        }
+
+        #header p {
+            font-size: 18px;
+        }
+
+        #header p .em {
+            color: #DA6D6D;
+            margin-left: 2px;
+            margin-right: 2px;
+            font-weight: bold;
+        }
+
+        #footer{
+            background-color: #333;
+            text-align: center;
+            color: white;
+            padding: 30px;
+            font-size: 15px;
+        }
+
+        #footer a {
+            text-decoration: none;
+            color: #6FA4CA;
+            margin-left: 2px;
+            margin-right: 2px;
+            transition: color .3s;
+            -o-transition: color .3s;
+            -moz-transition: color .3s;
+            -webkit-transition: color .3s;
+        }
+
+        #footer p a:hover {
+            color: #24597F;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div id="nav">
+            <a href="{{ url_for('index') }}" id="nav1">统计</a>
+            <a href="{{ url_for('rate') }}" id="nav2">评分</a>
+            <a href="{{ url_for('search') }}" id="nav3">搜索</a>
+        </div>
+        <h1>豆瓣电影<span style="font-family:JetLinkMediumOldStamp451548;color:#fff;position:relative;top:-1px;font-size:35px;"><span style="margin-left:10px;margin-right:5px;">数据</span>可视化</span></h1>
+        <p>电影原始数据来自<a href="http://movie.douban.com/" target="_blank">豆瓣电影</a>，使用python的<a href="https://docs.python.org/2/library/urllib2.html" target="_blank">urllib2</a>包<span class="em">爬取</span>数据、<a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">BeautifulSoup</a>包完成<span class="em">解析</span>，并且进行数据的<span class="em">预处理</span>和<span class="em">清洗</span>。</p>
+        <p>最终一共获取了<span class="em">7126</span>条电影记录，每条记录包含以下<span class="em">15</span>个字段：电影ID、标题、链接、缩略图、评分、导演、编剧、演员、分类、上映国家、语言、上映时间、时长、别名和简介。</p>
+        <p>在此基础上，使用<a href="http://echarts.baidu.com/" target="_blank">Echarts</a>进行简单的数据可视化，从而完整地展示网络数据<span class="em">采集</span>、<span class="em">存储</span>、<span class="em">处理</span>和<span class="em">使用</span>四个环节所涉及的技术链。</p>
+    </header>
+
+    <div id="main">
+        {% block body %}{% endblock %}
+    </div>
+
+    <footer id="footer">
+        <p>Copyright © 2019 <a href="http://www.baidu.com" target="_blank">朱佳棋</a>. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

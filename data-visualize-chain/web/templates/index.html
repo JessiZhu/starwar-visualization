@@ -1,0 +1,179 @@
+{% extends 'layout.html' %}
+{% block style %}
+<style>
+    #index{
+        padding: 20px 30px;
+    }
+
+    #index .line{
+        text-align: center;
+    }
+
+    #index #category {
+        display: inline-block;
+        height: 300px;
+        width: 44%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    #index #language {
+        display: inline-block;
+        height: 300px;
+        width: 44%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    #index #district {
+        display: inline-block;
+        height: 400px;
+        width: 80%;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+
+    #index #year {
+        display: inline-block;
+        height: 300px;
+        width: 44%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    #index #length {
+        display: inline-block;
+        height: 300px;
+        width: 44%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <div id="index">
+        <div class="line">
+            <div id="category"></div>
+            <div id="language"></div>
+        </div>
+        <div class="line">
+            <div id="district"></div>
+        </div>
+        <div class="line">
+            <div id="year"></div>
+            <div id="length"></div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#header #nav #nav1').addClass('active');
+
+            $('#header #nav a').mouseenter(function () {
+                $('#header #nav a').removeClass('active');
+                $(this).addClass('active');
+             });
+            $('#header #nav a').mouseleave(function () {
+               $('#header #nav a').removeClass('active');
+               $('#header #nav #nav1').addClass('active');
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('category'));
+
+        // 指定图表的配置项和数据
+            var option = {
+                title : {
+                    text: '某站点用户访问来源',
+                    subtext: '纯属虚构',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:335, name:'直接访问'},
+                            {value:310, name:'邮件营销'},
+                            {value:234, name:'联盟广告'},
+                            {value:135, name:'视频广告'},
+                            {value:1548, name:'搜索引擎'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('language'));
+
+        // 指定图表的配置项和数据
+            var option = {
+                title : {
+                    text: '某站点用户访问来源',
+                    subtext: '纯属虚构',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:335, name:'直接访问'},
+                            {value:310, name:'邮件营销'},
+                            {value:234, name:'联盟广告'},
+                            {value:135, name:'视频广告'},
+                            {value:1548, name:'搜索引擎'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        });
+    </script>
+{% endblock %}
