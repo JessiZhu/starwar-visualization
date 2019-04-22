@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="jquery.min.js"></script>
+	<title></title>
+
+</head>
+<style>
+	span {
+		border: 1px solid #333;
+		border-radius: 4px ;
+		font-family: Microsoft Yahei;
+		font-size:16px;
+		left:10%;
+		padding: 10px 20px;
+		position:absolute;
+		top:20px;
+		transition: color , background-color  0.2s;
+		-moz-transition: color , background-color  0.2s; 
+		-webkit-transition:color , background-color  0.2s;
+		-o-transition:color , background-color  0.2s; 
+
+	}
+	span:hover{
+		cursor:pointer;
+		color:#fff;
+		background-color: #333;
+	}
+</style>
+<body style="text-align: center;position: relative;">
+	<span>解散</span>
+	<svg width="960" height="600" style="margin: 40px">
+		<g></g>
+	</svg> 
+</body>
+<script>
+	$(document).ready(function() {
+		var mode = true ;
+		var alphaber = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		var chars = [];
+		for(var i = 0 ; i<200 ; i++){
+			chars.push(alphaber[Math.floor(Math.random() * alphaber.length)]);
+		}
+		console.log(chars);
+
+		var svg = d3.select('svg');
+		var width = svg.attr('width');
+		var height = svg.attr("height");
+
+		svg.select('g')
+		     .selectAll('text')
+		     .data(chars)
+		     .enter()
+		     .append('text')
+		     .text(function(d){
+		     	return d;
+		     })
+		     .attr('transform' , function(d,i){
+		     	return 'translate(' + (i*width/chars.length) + ',' + (height / 2 + (height - 40)*Math.sin(i*0.1)/2)+')';
+		     })
+		     .attr('font-size', function(d){
+		     	return Math.floor(10+15*Math.random());
+		     })
+		     .attr('fill', '#333')
+		     .attr('fill-opacity', function(d){
+		     	return Math.random() * 0.6 + 0.4;
+		     });
+
+		 $('span').click(function(event) {
+		 	if (mode) {
+		 		fly(mode) ;
+			 	$(this).text('站队');
+			 	mode = false ;
+			 }else{
+			 	fly(mode);
+			 	$(this).text('解散');
+			 	mode = true ;
+			 }
+		 });
+
+		 function fly(param){
+		 	d3.select('svg')
+		 	   .select('g')
+		 	   .selectAll('text')
+		 	   .transition()
+		 	   .delay(function(d , i){
+		 	   		return i*2;
+		 	   })
+		 	   .duration(600)
+		 	   .attr('transform', function(d , i){
+		 	   		if(mode){
+		 	   			return 'translate(' + (width - 40)*Math.random() + ',' + (height - 40 )*Math.random() + ')';
+		 	   			// return 'translate(20 , 30)';
+		 	   		}else{
+		 	   			return 'translate(' + (i*width/chars.length) + ',' + (height / 2 + (height - 40)*Math.sin(i*0.1)/2)+')';
+		 	   		}
+
+		 	   });
+		 }
+	});	
+	
+</script>
+</html>
